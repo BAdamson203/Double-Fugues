@@ -7,17 +7,26 @@
         <h2>
             Title
         </h2>
-        <textarea rows="1" cols="60"></textarea>
+        <textarea rows="1" cols="60" id="titleText"></textarea>
         <h2>
             Body
         </h2>
-        <textarea rows="3" cols="60" wrap="soft"></textarea>
+        <textarea rows="3" cols="60" wrap="soft" id="bodyText"></textarea>
         <br>
         <br>
-        <a href="underconstruction.html">
-            <button type="button">
+        <a href="posted.html" id="publish">
+            <button type="button" onclick="post()">
                 Publish
             </button>
         </a>
     </body>
+
+    <script>
+        function post() {
+            var title = document.getElementById("titleText").value;
+            var body = document.getElementById("bodyText").value;
+            localStorage.setItem("title", title);
+            localStorage.setItem("body", body);
+        }
+    </script>
 </html>

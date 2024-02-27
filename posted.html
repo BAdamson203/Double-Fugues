@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1 id="head"></h1>
+        <p id="foot"></p>
+    </body>
+
+    <script>
+        var head = localStorage.getItem("title");
+        var foot = localStorage.getItem("body");
+        document.getElementById("head").innerHTML = head;
+        document.getElementById("foot").innerHTML = foot;
+    </script>
+</html>
