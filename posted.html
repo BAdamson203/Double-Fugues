@@ -10,5 +10,7 @@
         var foot = localStorage.getItem("body");
         document.getElementById("head").innerHTML = head;
         document.getElementById("foot").innerHTML = foot;
+        localStorage.removeItem("title");
+        localStorage.removeItem("body");
     </script>
 </html>
