@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
-<body style="background-color: mediumSeaGreen; color:white">
+<body style="background-color: navy; color:white">
+<script src="myscripts.js"></script>
+   <script>
+      function myFun(){
+         alert("Hello there!");
+      }
+   </script>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" /> 
+    <title>DoubleFugues Profile Management</title>
+</head>
+
+<link rel="stylesheet" type="text/css" href="styles.css" />
 
 
 
-<h1 style="color:white">Profile Creation!</h1>
-<p style>This is where you enter who you are and what you're into. Based on this, we will find good activities and events for you.</p>
+<h1 style="color:white">Create your profile, [name]!</h1>
+<p style>Enter what you are into here, and we'll use this data to find posts of events and activities you'll probably like.</p>
 
 
 <p><BR><BR><BR>
@@ -13,35 +29,35 @@ First off, general categories:<br><br>Scale to select how much these describe yo
 
 Sports:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="1000" value="500" class="slider" id="myRange">
 </div><br>
 
 <p>
 Music:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div><br><br>
 
 
 Video Games:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div><br><br>
 
 
 Crafty Hobbies:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div><br><br>
 
 Gardening:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div><br><br>
 
 More general categories to follow:
 <div class="slidecontainer">
-  <input type="range" min="0" max="10" value="5" class="slider" id="myRange">
+  <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
 </div><br><br>
 
 
@@ -53,7 +69,8 @@ More general categories to follow:
 
 
 
-Next, choose some option you are interested in (We will show you posts with these tags):<br>
+Next, add tags you specifically want to make sure you see: <br>
+//This segment will be re-done with a <br>//tag-selection UI at a later time.
 <br><label for="dog-names"></label> <br>
     <select name="dog-names" id="dog-names"> 
         <option value="one">DoubleFugues</option> 
@@ -212,7 +229,8 @@ Next, choose some option you are interested in (We will show you posts with thes
 		<option value="five">This list will be very long, but organized!</option>
     </select>
 
-
+<br><br><br><br>
+<button> Save! </button>
 
 <Br><br><br><BR><BR><BR><BR>
 </body>
