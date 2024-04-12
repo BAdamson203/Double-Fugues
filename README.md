@@ -1,3 +1,1 @@
-Here is the stub of the readme!
-
-More to come here.
+This project is undergoing organizational renovations. Don't pull anything until further notice.
