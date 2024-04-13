@@ -44,6 +44,9 @@ function App() {
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      'hd': 'my.wheaton.edu'
+     });
     auth.signInWithPopup(provider);
   }
 
