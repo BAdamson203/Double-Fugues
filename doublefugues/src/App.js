@@ -35,7 +35,7 @@ function App() {
       </header>
 
       <section>
-        {user ? <ChatRoom /> : <SignIn />}
+        {user ? <PostsPage /> : <SignIn />}
       </section>
     </div>
   );
@@ -59,7 +59,7 @@ function SignIn() {
     )
   }
 
-  function ChatRoom() {
+  function PostsPage() {
 
     const dummy = useRef();
 
@@ -108,7 +108,7 @@ function SignIn() {
   }
 
   function SinglePost(props) {
-    const { text, uid, photoURL } = props.posts;
+    const { text, uid, photoURL, createdAt } = props.posts;
 
     const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
     return (
