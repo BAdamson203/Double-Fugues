@@ -67,7 +67,7 @@ function SignIn() {
     const dummy = useRef();
 
     const postsRef = firestore.collection('posts');
-    const query = postsRef.orderBy('createdAt').limit(25);
+    const query = postsRef.orderBy('createdAt');
 
     const [posts] = useCollectionData(query, {idField: 'id'});
 
