@@ -1,5 +1,6 @@
 import "./share.css"
 import {Label} from "@mui/icons-material"
+import Person from  "../../components/assets/defaultAvatar.jpg"
 
 
 export default function Share() {
@@ -10,7 +11,7 @@ export default function Share() {
             <div className="shareBox"> 
                 <div className="shareWrapper">
                     <div className="shareTop">
-                        <img className="shareProfileImg" src="jpeg.jpeg" alt="" />
+                        <img className="shareProfileImg" src={Person} alt="" />
                         <input 
                             placeholder="input" 
                             className="shareInput"

@@ -1,35 +1,30 @@
 import Topbar from "../../components/topbar/Topbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Feed from "../../components/feed/Feed"
-import Rightbar from "../../components/rightbar/Rightbar"
 import "./profile.css"
+import Background from "../../components/assets/background.jpg"
+import Person from "../../components/assets/defaultAvatar.jpg"
+
 
 export default function Profile() {
     return(
         <>
-            <Topbar/>
+            <Topbar className="topbar"/>
             <div className="profile">
-                <Sidebar/>
+                <Sidebar className="sidebar"/>
                 <div className="profileRight">
                     <div className="profileRightTop">
-                        <div className="profileCover">
-
-                        </div>
-                        <div className="profileCoverImg">
-
-                        </div>
-                        <div className="profileUserImg">
-
-                        </div>
+                        <img className="profileCoverImg" src = {Background} alt=""/>
+                        <img className="profileUserImg" src = {Person} alt=""/>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">name</h4>
                             <span className="profileInfoDesc">description</span>
                         </div>
                     </div>
-                    <div className="profileRightBottom"></div>
-                    <Feed/>
-                    <Rightbar/>
-                </div>
+                    <div className="profileRightBottom">
+                        <Feed className="feed"/>
+                    </div>
+                </div>   
             </div>
         </>
     )
