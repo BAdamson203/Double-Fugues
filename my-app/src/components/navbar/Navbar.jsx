@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-scroll'
 import './Navbar.css'
 import testImg from '../../assets/image.png'
 
@@ -17,10 +18,19 @@ const Navbar = () => {
         <img src={testImg} alt="" className='logo'/>
         <ul>
             <li>
-                About us
+                <Link to="hero" smooth={true} offset={0} duration={500}>
+                    Home
+                </Link>
             </li>
             <li>
-                Contact us
+                <Link to="about" smooth={true} offset={-300} duration={500}>
+                    About us
+                </Link>
+            </li>
+            <li>
+                <Link to="contact" smooth={true} offset={-300} duration={500}>
+                    Contact us
+                </Link>
             </li>
             <li>
                 Sign up
