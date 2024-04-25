@@ -1,6 +1,6 @@
-import "./share.css"
-import {Label} from "@mui/icons-material"
-import Person from  "../../components/assets/defaultAvatar.jpg"
+import "./share.css";
+import {Label} from "@mui/icons-material";
+import Person from  "../../components/assets/defaultAvatar.jpg";
 
 
 export default function Share() {
