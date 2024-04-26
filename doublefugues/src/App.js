@@ -316,6 +316,48 @@ function SignIn() {
     )
   }
 
+  function FilteredPostsPage() {
+
+    const dummy = useRef();
+    const { uid } = auth.currentUser;
+
+    const postsRef = firestore.collection('posts');
+    const query = postsRef.where('uid','==',uid);
+        /*const query = postsRef.where('uid','==',uid);*/
+
+    const [posts] = useCollectionData(query, {idField: 'id'});
+
+    const [formValue, setFormValue] = useState('');
+
+    const makePost = async(e) => {
+
+      e.preventDefault();
+
+      const { uid, photoURL } = auth.currentUser;
+
+      await postsRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        photoURL
+      })
+
+      setFormValue('');
+
+      dummy.current.scrollIntoView({behavior: 'smooth'});
+      }
+
+    return (
+      <>
+        <main>
+          {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
+
+          <div ref={dummy}></div>
+        </main>
+      </>
+    )
+  }
+
   function SinglePost(props) {
     const { text, uid, photoURL, createdAt } = props.posts;
     const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
@@ -371,7 +413,7 @@ function SignIn() {
                         </div>
                     </div>
                     <div className="profileRightBottom">
-                        <PostsPage/>
+                        <FilteredPostsPage/>
                     </div>
                 </div>   
             </div>
