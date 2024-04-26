@@ -3,7 +3,7 @@ import { Link } from 'react-scroll';
 import reactDOM from 'react-dom';
 import './App.css';
 /* icon imports */
-import { Chat, Help, RssFeed, Search, Label } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 /* image imports */
 import background from "./components/assets/background.jpg";
 
