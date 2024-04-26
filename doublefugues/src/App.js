@@ -359,8 +359,13 @@ function SignIn() {
   }
 
   function SinglePost(props) {
-    const { text, uid, photoURL, createdAt } = props.posts;
+    const { text, uid, photoURL, createdAt, tags } = props.posts;
     const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+    var printTag = '';
+    for(const a in tags){
+      printTag += "#"+tags[a]+" ";
+    }
+
     return (
       <div className="shareBox"> 
                 <div className="shareWrapper">
@@ -375,12 +380,7 @@ function SignIn() {
                         <div className="shareOptions">
                             {/* shareOption is current placeholder for tag system */}
                             <div className="shareOption">
-                                <Label className="shareIcon"/>
-                                <span className="shareOptionText">Tag</span>
-                            </div>
-                            <div className="shareOption">
-                                <Label className="shareIcon"/>
-                                <span className="shareOptionText">Tag</span>
+                                {printTag ? <b>{printTag}</b> : <i>This post has no tags</i>}
                             </div>
                         </div>
                     </div>
