@@ -16,12 +16,12 @@
 }
 
 .hero-text h1{
-    font-size: 60px;
+    font-size: 96px;
     font-weight: 600;
 }
 
 .hero-text p{
-    max-width: 700px;
     margin: 10px auto 20px;
     line-height: 1.4;
+    font-size: 36px;
 }
