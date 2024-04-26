@@ -100,6 +100,12 @@
   justify-content: center;
 }
 
+.profileBottom{
+ flex:2;
+ display:flex;
+ flex-direction:column-reverse;
+}
+
 .profileRightBottom{
   margin-top: 20px;
   margin-right: 30px;
@@ -172,7 +178,7 @@
 .shareBox{
   margin-top: 20px;
   margin-left:100px;
-  width: 90%;
+  width: auto;
   height: 170px;
   border-radius: 10px;
   box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68);

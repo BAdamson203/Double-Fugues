@@ -15,7 +15,6 @@ import 'firebase/compat/analytics'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import testImg from './assets/image2.jpg' /* image credits: medievalarchives.com */
 import students from './assets/chapel-students.webp' /* image credits: wheaton.edu */
 import logo from './assets/df-logo.jpg';
 
@@ -308,7 +307,7 @@ function SignIn() {
 
     return (
       <>
-      <Topbar/>
+      {/*<Topbar/>*/}
       <form onSubmit={makePost}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
         <button type="submit">SEND</button>
@@ -420,8 +419,15 @@ function SignIn() {
                             {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
                         </div>
                     </div>
-                    <div className="profileRightBottom">
-                        <FilteredPostsPage/>
+                    <div className="profileBottom">
+                      <div className="profileRightBottom">
+                        <h4>Your Posts</h4>
+                          <FilteredPostsPage/>
+                      </div>
+                      <div className="profileLeftBottom">
+                        <h4>Feed</h4>
+                        <PostsPage/>
+                      </div>
                     </div>
                 </div>   
             </div>
