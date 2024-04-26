@@ -17,6 +17,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import testImg from './assets/image2.jpg' /* image credits: medievalarchives.com */
 import students from './assets/chapel-students.webp' /* image credits: wheaton.edu */
+import logo from './assets/df-logo.jpg'
 
 firebase.initializeApp({
   apiKey: "AIzaSyABZ_Vo1gmStINDqZfuDMvMKe1POot0jGU",
@@ -52,7 +53,7 @@ const Navbar = () => {
 
 return (
   <nav className={`container ${sticky ? 'dark-nav' : ''}`}>
-      <img src={testImg} alt="" className='logo'/>
+      <img src={logo} alt="" className='logo'/>
       <ul>
           <li>
               <Link to="hero" smooth={true} offset={0} duration={500}>
