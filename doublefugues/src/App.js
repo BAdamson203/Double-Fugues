@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-scroll';
 import reactDOM from 'react-dom';
 import './App.css';
 /* icon imports */
@@ -14,10 +15,8 @@ import 'firebase/compat/analytics'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-
-
-
-
+import testImg from './assets/image.png'
+import gecko from './assets/whoafreezeframe.png'
 
 firebase.initializeApp({
   apiKey: "AIzaSyABZ_Vo1gmStINDqZfuDMvMKe1POot0jGU",
@@ -33,15 +32,215 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
 
+const Navbar = () => {
 
+  const [sticky, setSticky] = useState(false);
+
+  useEffect(()=>{
+      window.addEventListener('scroll', ()=>{
+          window.scrollY > 50 ? setSticky(true) : setSticky(false);
+      })
+  },[]);
+
+  const signInWithGoogle = () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({
+        'hd': 'my.wheaton.edu'
+       });
+      auth.signInWithPopup(provider);
+  }
+
+return (
+  <nav className={`container ${sticky ? 'dark-nav' : ''}`}>
+      <img src={testImg} alt="" className='logo'/>
+      <ul>
+          <li>
+              <Link to="hero" smooth={true} offset={0} duration={500}>
+                  Home
+              </Link>
+          </li>
+          <li>
+              <Link to="about" smooth={true} offset={-350} duration={500}>
+                  About us
+              </Link>
+          </li>
+          <li>
+              <Link to="contact" smooth={true} offset={-350} duration={500}>
+                  Contact us
+              </Link>
+          </li>
+          <li>
+              <Link onClick={signInWithGoogle} className='btn'>
+                  Log in with Google
+              </Link>
+          </li>
+      </ul>
+  </nav>
+)
+}
+
+const Hero = () => {
+  return (
+    <div className='hero container'>
+        <div className="hero-text">
+            <h1>Double Fugue</h1>
+            <p>A place to connect with other Wheaties about your unique hobbies</p>
+            <button className='btn'>Log in</button>
+        </div>
+    </div>
+  )
+}
+
+const Title = ({subtitle, title}) => {
+  return (
+    <div className='title'>
+        <p>{subtitle}</p>
+        <h2>{title}</h2>
+    </div>
+  )
+}
+
+const About = () => {
+  return (
+    <div className='about'>
+        <div className="about-left">
+            <img src={gecko} alt="" className='gecko'/>
+        </div>
+        <div className="about-right">
+            <h2>Finding new friends based on your interests</h2>
+            <p>Double Fugue is an application created by Wheaton students to help
+              serve the Wheaton College campus community by connecting students
+              through common interests.</p>
+            <p>Our goal is to bring students across Wheaton College closer together
+              to do more of the weird things that they love with others who love to
+              do the same.</p>
+            <p>If you've been having trouble finding a fugue partner or really, 
+              really want to routinely cook recipes generated with ChatGPT with
+              other students, or something like that, Double Fugue might just
+              be the service for you!</p>
+        </div>
+    </div>
+  )
+}
+
+const Contact = () => {
+
+  /* Script obtained from Web3 forms.
+     Can receive 250 form submissions per month for free. */
+  const [result, setResult] = React.useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    /* access key corresponds to Josh P.'s email */
+    formData.append("access_key", "55dd8a16-cedd-4a9a-b71c-43f1f83c9f2a");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
+    }
+  };
+
+  return (
+    <div className='contact'>
+      <div className="contact-col">
+        <h3>Send us a message</h3>
+        <p>Feel free to reach out to us through the provided contact form or our
+          contact information listed below. We want our platform to serve the
+          Wheaton community as best as we can and any feedback to improve our
+          service is always appreciated.</p>
+        <h3>Our team</h3>
+        <ul>
+          <li>
+            Benjamin Adamson: benjamin.adamson@my.wheaton.edu
+          </li>
+          <li>
+            Luke Bilhorn: luke.bilhorn@my.wheaton.edu
+          </li>
+          <li>
+            Josh Piazza: josh.piazza@my.wheaton.edu
+          </li>
+          <li>
+            Josh Schuurman: josh.schuurman@my.wheaton.edu
+          </li>
+          <li>
+            Ziling Zhong: ziling.zhong@my.wheaton.edu
+          </li>
+        </ul>
+      </div>
+      <div className="contact-col">
+        <form onSubmit={onSubmit}>
+          <label>
+            Your name
+          </label>
+          <input type="text" name="name" placeholder="Enter your name" required/>
+          <label>
+            Email address
+          </label>
+          <input type="text" name="email" placeholder="Enter your email address" required/>
+          <label>
+            Write your message here
+          </label>
+          <textarea name="message" rows="6" placeholder="Enter your thoughts" required/>
+          <button type="submit" className="btn dark-btn">
+            Submit now
+          </button>
+        </form>
+        <span>{result}</span>
+      </div>
+    </div>
+  )
+}
+
+const Footer = () => {
+  return (
+    <div className="footer">
+        <p>© Double Fugue, 2024. All rights reserved.</p>
+        <ul>
+            <li>
+                Terms of Service
+            </li>
+            <li>
+                Privacy Policy
+            </li>
+        </ul>
+    </div>
+  )
+}
 
 function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
       <section>
-        {user ? <Profile /> : <SignIn />}
+        {user ? <Profile /> : <LandingPage />}
       </section>
+    </div>
+  );
+}
+
+function LandingPage() {
+  return(
+    <div className="landing page">
+      <Navbar/>
+      <Hero/>
+      <Title subtitle='About Double Fugue' title='Connecting Wheaties through their hobbies'/>
+      <About/>
+      <Title subtitle='Contact us' title='Let us know what you think!'/>
+      <Contact/>
+      <Footer/>
     </div>
   );
 }
