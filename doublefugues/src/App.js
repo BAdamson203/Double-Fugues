@@ -15,8 +15,8 @@ import 'firebase/compat/analytics'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import testImg from './assets/image2.jpg'
-import gecko from './assets/whoafreezeframe.png'
+import testImg from './assets/image2.jpg' /* image credits: medievalarchives.com */
+import students from './assets/chapel-students.webp' /* image credits: wheaton.edu */
 
 firebase.initializeApp({
   apiKey: "AIzaSyABZ_Vo1gmStINDqZfuDMvMKe1POot0jGU",
@@ -80,12 +80,21 @@ return (
 }
 
 const Hero = () => {
+
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      'hd': 'my.wheaton.edu'
+     });
+    auth.signInWithPopup(provider);
+}
+
   return (
     <div className='hero container'>
         <div className="hero-text">
             <h1>Double Fugue</h1>
             <p>A place to connect with other Wheaties about your unique hobbies</p>
-            <button className='btn'>Log in</button>
+            <button className='btn' onClick={signInWithGoogle}>Log in</button>
         </div>
     </div>
   )
@@ -104,7 +113,7 @@ const About = () => {
   return (
     <div className='about'>
         <div className="about-left">
-            <img src={gecko} alt="" className='gecko'/>
+            <img src={students} alt="" className='gecko'/>
         </div>
         <div className="about-right">
             <h2>Finding new friends based on your interests</h2>
