@@ -72,7 +72,6 @@
 
 .profileRightTop{
   object-fit: center;
-  margin-right: 30px;
 }
 
 .profileCoverImg{
@@ -172,7 +171,7 @@
 
 .shareBox{
   margin-top: 20px;
-  margin-left:30px;
+  margin-left:100px;
   width: 90%;
   height: 170px;
   border-radius: 10px;
