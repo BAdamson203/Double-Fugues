@@ -15,7 +15,7 @@ import 'firebase/compat/analytics'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import testImg from './assets/image.png'
+import testImg from './assets/image2.jpg'
 import gecko from './assets/whoafreezeframe.png'
 
 firebase.initializeApp({
