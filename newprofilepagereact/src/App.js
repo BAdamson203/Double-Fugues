@@ -29,7 +29,6 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 const analytics = firebase.analytics();
 
-
 function App() {
   const [user] = useAuthState(auth);
   return (
@@ -42,22 +41,11 @@ function App() {
 }
 
 function Profile() {
-  var firstname, lastname;
   const { uid, photoURL } = auth.currentUser;
   const profileRef = firestore.collection('account');
   const query = profileRef.where('uid','==',uid);
   const [profile] = useCollectionData(query, { idField: 'id' });
-  const doc = profileRef.get();
-  if (!doc.exists) {
-    firstname = 'firstname';
-    lastname = 'lastname';
-  } else {
-    var data = doc.data();
-    firstname = data.fname;
-    lastname = data.lname;
-  }
     
-
   return(
       <>
           <Topbar className="topbar"/>
@@ -68,13 +56,7 @@ function Profile() {
                       <img className="profileCoverImg" src = {background} alt=""/>
                       <img className="profileUserImg" src = {photoURL} alt=""/>
                       <div className="profileInfo">
-                          
-                          <h4 className="profileInfoName">
-                            {firstname} {lastname}
-                          </h4>
-                          
-                          <span className="profileInfoDesc">description</span>
-                      
+                          {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
                       </div>
                   </div>
                   <div className="profileRightBottom">
@@ -83,6 +65,19 @@ function Profile() {
               </div>   
           </div>
       </>
+  )
+}
+
+function ProfileInfo(props){
+  const { fname, id, lname, uid } = props.profiles;
+  const profileClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  return(
+    <div>
+      <h4 className="name">
+        {fname} {lname}
+      </h4>
+      <span className="profileInfoDesc">{id}</span>
+    </div>
   )
 }
 
