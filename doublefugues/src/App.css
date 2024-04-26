@@ -290,7 +290,7 @@ nav ul li{
 .hero{
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(rgba(8,0,58,0.7), rgba(8,0,58,0.7)), url('./LandingPage/src/assets/image.png');
+  background: linear-gradient(rgba(8,0,58,0.7), rgba(8,0,58,0.7)), url('./assets/image.png');
   background-size: cover;
   background-position: center;
   color: #FFFFFF;
