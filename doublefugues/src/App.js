@@ -153,48 +153,43 @@ function SignIn() {
   }
 
 
-function Profile() {
-  var firstname, lastname;
-  const { uid, photoURL } = auth.currentUser;
-  const profileRef = firestore.collection('account');
-  const query = profileRef.where('uid','==',uid);
-  const [profile] = useCollectionData(query, { idField: 'id' });
-  const doc = profileRef.get();
-  if (!doc.exists) {
-    firstname = 'firstname';
-    lastname = 'lastname';
-  } else {
-    var data = doc.data();
-    firstname = data.fname;
-    lastname = data.lname;
+  function Profile() {
+    const { uid, photoURL } = auth.currentUser;
+    const profileRef = firestore.collection('account');
+    const query = profileRef.where('uid','==',uid);
+    const [profile] = useCollectionData(query, { idField: 'id' });
+    return(
+        <>
+            <Topbar className="topbar"/>
+            <div className="profile">
+                {/*<Sidebar className="sidebar"/>*/}
+                <div className="profileRight">
+                    <div className="profileRightTop">
+                        <img className="profileCoverImg" src = {background} alt=""/>
+                        <img className="profileUserImg" src = {photoURL} alt=""/>
+                        <div className="profileInfo">
+                            {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
+                        </div>
+                    </div>
+                    <div className="profileRightBottom">
+                        <PostsPage/>
+                    </div>
+                </div>   
+            </div>
+        </>
+    )
   }
-    
 
+function ProfileInfo(props){
+  const { fname, id, lname, uid } = props.profiles;
+  const profileClass = uid === auth.currentUser.uid ? 'sent' : 'received';
   return(
-      <>
-          <Topbar className="topbar"/>
-          <div className="profile">
-              <Sidebar className="sidebar"/>
-              <div className="profileRight">
-                  <div className="profileRightTop">
-                      <img className="profileCoverImg" src = {background} alt=""/>
-                      <img className="profileUserImg" src = {photoURL} alt=""/>
-                      <div className="profileInfo">
-                          
-                          <h4 className="profileInfoName">
-                            {firstname} {lastname}
-                          </h4>
-                          
-                          <span className="profileInfoDesc">description</span>
-                      
-                      </div>
-                  </div>
-                  <div className="profileRightBottom">
-                      <PostsPage/>
-                  </div>
-              </div>   
-          </div>
-      </>
+    <div>
+      <h4 className="name">
+        {fname} {lname}
+      </h4>
+      <span className="profileInfoDesc">{id}</span>
+    </div>
   )
 }
 
@@ -230,17 +225,12 @@ function Topbar() {
   )
 }
 
-function Sidebar() {
+/*function Sidebar() {
   return(
       <div className="sidebar">
           <div className="sidebarWrapper">
               <ul className="sidebarList">
                   <li className="sidebarListItem">
-                    {/* Feed not currently implemented, may be scrapped */}
-                      <RssFeed className="sidebarIcon"/>
-                      <span className="sidebarListItemText">
-                        Feed
-                      </span>
                   </li>
                   <li className="sidebarListItem">
                       <Chat className="sidebarIcon"/>
@@ -257,7 +247,7 @@ function Sidebar() {
               <hr/>
           </div>
       </div>)
-}
+}*/
 
 
   export default App;
