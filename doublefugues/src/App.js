@@ -17,7 +17,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import testImg from './assets/image2.jpg' /* image credits: medievalarchives.com */
 import students from './assets/chapel-students.webp' /* image credits: wheaton.edu */
-import logo from './assets/df-logo.jpg'
+import logo from './assets/df-logo.jpg';
 
 firebase.initializeApp({
   apiKey: "AIzaSyABZ_Vo1gmStINDqZfuDMvMKe1POot0jGU",
@@ -277,7 +277,6 @@ function SignIn() {
   }
 
   function PostsPage() {
-
     const dummy = useRef();
     const { uid } = auth.currentUser;
 
@@ -309,19 +308,19 @@ function SignIn() {
 
     return (
       <>
+      <Topbar/>
+      <form onSubmit={makePost}>
+        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <button type="submit">SEND</button>
+      </form>
+
         <main>
           {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
 
           <div ref={dummy}></div>
         </main>
 
-        <form onSubmit={makePost}>
-
-          <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-
-          <button type="submit">SEND</button>
-
-        </form>
+        
       </>
     )
   }
@@ -403,7 +402,6 @@ function SignIn() {
     )
   }
 
-
   function Profile() {
     const { uid, photoURL } = auth.currentUser;
     const profileRef = firestore.collection('account');
@@ -469,6 +467,8 @@ function Topbar() {
                 <span className="topbarLink">
                   Home
                 </span>
+                
+
                 <SignOut className="signOutButton"/>
             </div>
         </div>
