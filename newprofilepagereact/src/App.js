@@ -1,6 +1,6 @@
 import "./App.css";
 /* icon imports */
-import { Chat, Help, RssFeed, Search } from "@mui/icons-material";
+import { Chat, Help, RssFeed, Search, Label } from "@mui/icons-material";
 /* image imports */
 import background from "./components/assets/background.jpg";
 /* Firebase setup */
@@ -42,10 +42,21 @@ function App() {
 }
 
 function Profile() {
+  var firstname, lastname;
   const { uid, photoURL } = auth.currentUser;
   const profileRef = firestore.collection('account');
   const query = profileRef.where('uid','==',uid);
   const [profile] = useCollectionData(query, { idField: 'id' });
+  const doc = profileRef.get();
+  if (!doc.exists) {
+    firstname = 'firstname';
+    lastname = 'lastname';
+  } else {
+    var data = doc.data();
+    firstname = data.fname;
+    lastname = data.lname;
+  }
+    
 
   return(
       <>
@@ -59,7 +70,7 @@ function Profile() {
                       <div className="profileInfo">
                           
                           <h4 className="profileInfoName">
-                            {uid}
+                            {firstname} {lastname}
                           </h4>
                           
                           <span className="profileInfoDesc">description</span>
@@ -210,10 +221,34 @@ function SignIn() {
     const { text, uid, photoURL, createdAt } = props.posts;
     const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
     return (
-      <div className={'post ${postClass}'}>
+      <div className="shareBox"> 
+                <div className="shareWrapper">
+                    <div className="shareTop">
+                        <img className="shareProfileImg" src={photoURL} alt="" />
+                        <p>
+                          {text}
+                        </p>
+                    </div>
+                    <hr className="shareHr"/>
+                    <div className="shareBottom">
+                        <div className="shareOptions">
+                            {/* shareOption is current placeholder for tag system */}
+                            <div className="shareOption">
+                                <Label className="shareIcon"/>
+                                <span className="shareOptionText">Tag</span>
+                            </div>
+                            <div className="shareOption">
+                                <Label className="shareIcon"/>
+                                <span className="shareOptionText">Tag</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            /*<div className={'post ${postClass}'}>
         <img src={photoURL} />
         <p>{text}</p>
-      </div>
+      </div>*/
     )
   }
 
