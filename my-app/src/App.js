@@ -11,7 +11,7 @@ const App = () => {
     <div>
       <Navbar/>
       <Hero/>
-      <Title subtitle='About Double Fugue' title='Connecting Wheaties through Their Hobbies'/>
+      <Title subtitle='About Double Fugue' title='Connecting Wheaties through their hobbies'/>
       <About/>
       <Title subtitle='Contact us' title='Let us know what you think!'/>
       <Contact/>

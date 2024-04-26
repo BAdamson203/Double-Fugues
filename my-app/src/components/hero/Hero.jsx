@@ -7,7 +7,7 @@ const Hero = () => {
     <div className='hero container'>
         <div className="hero-text">
             <h1>Double Fugue</h1>
-            <p>A place to connect with other Wheaties about your favorite hobbies</p>
+            <p>A place to connect with other Wheaties about your unique hobbies</p>
             <button className='btn'>Log in <img src={gecko} alt=""/></button>
         </div>
     </div>
