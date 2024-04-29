@@ -310,7 +310,8 @@ function PostsPage() {
   }
 
   function toggleTag(x) {
-    tagArr = tagArr.includes(x) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr + x;
+    tagArr = tagArr.includes(x) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr.push(x);
+    alert("test");
   }
 
     return (
@@ -322,23 +323,20 @@ function PostsPage() {
           <img className="shareProfileImg" src={photoURL} alt="" />
           <form onSubmit={makePost}>
             <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="what's your post?" className="postField"/>
+            <div className="shareBottom">
+            <button type="submit" className="submit">SEND</button>
+          </div>
           </form>
           </div>
           <hr className="shareHr"/>
-          <button onclick="toggleTag('x')">#tag2</button>
-          <div className="shareBottom">
-            <button type="submit" className="submit">SEND</button>
-          </div>
+          <button onclick="toggleTag('tag2')">#tag2</button>
         </div>
       </div>
-
+      
         <main>
           {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
-
           <div ref={dummy}></div>
         </main>
-
-        
       </>
     )
   }
@@ -350,8 +348,6 @@ function PostsPage() {
 
     const postsRef = firestore.collection('posts');
     const query = postsRef.where('uid','==',uid);
-        /*const query = postsRef.where('uid','==',uid);*/
-
     const [posts] = useCollectionData(query, {idField: 'id'});
 
     const [formValue, setFormValue] = useState('');
@@ -403,19 +399,14 @@ function SinglePost(props) {
                   </div>
                   <hr className="shareHr"/>
                   <div className="shareBottom">
-                      <div className="shareOptions">
-                          {/* shareOption is current placeholder for tag system */}
-                          <div className="shareOption">
+                      <div className="tags">
+                          <div className="tags">
                               {printTag ? <b>{printTag}</b> : <i>This post has no tags</i>}
                           </div>
                       </div>
                   </div>
               </div>
           </div>
-          /*<div className={'post ${postClass}'}>
-      <img src={photoURL} />
-      <p>{text}</p>
-    </div>*/
   )
 }
 
