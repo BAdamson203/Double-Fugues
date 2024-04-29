@@ -15,9 +15,9 @@ return (
     </div>
     <div className="topbarRight">
         <div className="topbarLinks">
-            <span className="topbarLink">About Double Fugue</span>
-            <span className="topbarLink">FAQ</span>
-            <span className="topbarLink" >Home</span>
+            {/*<span className="topbarLink">About Double Fugue</span>*/}
+            <span className="topbarLink">Feed</span>
+            {/*<span className="topbarLink" >Home</span>*/}
         </div>
     </div>
 </div>

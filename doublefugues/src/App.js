@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import reactDOM from 'react-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 /* icon imports */
 import { Search } from "@mui/icons-material";
@@ -232,12 +233,13 @@ const Footer = () => {
 function App() {
   const [user] = useAuthState(auth);
   return (
+
     <div className="App">
-      <section>
-        {user ? <Profile /> : <LandingPage />}
-      </section>
+        <section>
+          {user ? <Profile /> : <LandingPage />}
+        </section>
     </div>
-  );
+);
 }
 
 function LandingPage() {
@@ -307,7 +309,7 @@ function SignIn() {
 
     return (
       <>
-      {/*<Topbar/>*/}
+{/*<Topbar/>*/}
       <form onSubmit={makePost}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
         <button type="submit">SEND</button>
@@ -320,7 +322,7 @@ function SignIn() {
         </main>
 
         
-      </>
+              </>
     )
   }
 
@@ -419,12 +421,12 @@ function SignIn() {
                             {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
                         </div>
                     </div>
-                    <div className="profileBottom">
-                      <div className="profileRightBottom">
-                        <h4>Your Posts</h4>
-                          <FilteredPostsPage/>
-                      </div>
-                      <div className="profileLeftBottom">
+<div className="profileBottom">
+                    <div className="profileRightBottom">
+<h4>Your Posts</h4>
+                        <FilteredPostsPage/>
+                    </div>
+<div className="profileLeftBottom">
                         <h4>Feed</h4>
                         <PostsPage/>
                       </div>
@@ -473,7 +475,7 @@ function Topbar() {
                 <span className="topbarLink">
                   Home
                 </span>
-                
+
 
                 <SignOut className="signOutButton"/>
             </div>
@@ -481,6 +483,30 @@ function Topbar() {
     </div>
   )
 }
+/*
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function Navbar() {
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/contact">Contact</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+*/
+
+
 
 /*function Sidebar() {
   return(
