@@ -288,7 +288,7 @@ function PostsPage() {
 
   const [posts] = useCollectionData(query, {idField: 'id'});
 
-  const [formValue, setFormValue, tagValue, setTagValue] = useState('');
+  const [formValue, setFormValue] = useState('');
 
   const makePost = async(e, f) => {
 
@@ -298,18 +298,31 @@ function PostsPage() {
 
     await postsRef.add({
       text: formValue,
-      tags: [],
+      tags: tagArr,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
     })
 
+    setFormValue('');
+
     dummy.current.scrollIntoView({behavior: 'smooth'});
   }
 
-  function toggleTag(x){
-    //tagArr = (tagArr & tagArr.length) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr.push(x);
-    //alert(x);
+  /*const addTag = async(e) => {
+
+    e.preventDefault();
+
+    tagArr = tagArr.includes(formValue) ? tagArr.splice(tagArr.indexOf(formValue), 1) : tagArr.push(formValue);
+
+    setFormValue('');
+
+    dummy.current.scrollIntoView({behavior: 'smooth'});
+  }*/
+
+  function toggleTag(x) {
+    //tagArr = tagArr.includes(x) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr.push(x);
+    //alert("test");
   }
 
     return (
@@ -320,23 +333,30 @@ function PostsPage() {
           <div className="shareTop">
           <img className="shareProfileImg" src={photoURL} alt="" />
           <form onSubmit={makePost}>
-            <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="what's your post?" className="postField"/>
-            <div className="shareBottom">
+            <input value={formValue} onChange={(e) => setFormValue(e.target.value)} 
+            placeholder="What's your post?" className="postField"/>
             <button type="submit" className="submit">SEND</button>
-          </div>
-          </form>
-          </div>
-          <hr className="shareHr"/>
-          <h5>Toggle Tags:</h5>
+            </form>    
+        </div> 
+        <hr className="shareHr"/>
+        <div className="shareBottom">
+              {/*<form name="Tags" onSubmit={addTag}>
+                <input value={tagValue} onChange={setTagValue(tagValue)} 
+                placeholder="Add Tags!" className="postField"/>
+                <button type="submit" className="submit">SEND</button>
+              </form>*/}
+          {/* placeholder <button onclick="toggleTag('tag2')">#tag2</button> */}
+        </div>
+        <h5>Toggle Tags:</h5>
           <span>
             <button onclick={toggleTag('sports')}>#sports</button>
             <button onclick={toggleTag('music')}>#music</button>
             <button onclick={toggleTag('food')}>#food</button>
             <button onclick={toggleTag('movies')}>#movies</button>
           </span>
-        </div>
+         </div>
       </div>
-
+      
         <main>
           {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
           <div ref={dummy}></div>
