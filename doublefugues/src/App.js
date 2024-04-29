@@ -310,10 +310,12 @@ function SignIn() {
     return (
       <>
 {/*<Topbar/>*/}
-      <form onSubmit={makePost}>
-        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit">SEND</button>
-      </form>
+      <div className="postForm">
+        <form onSubmit={makePost}>
+          <input value={formValue} onChange={(e) => setFormValue(e.target.value)} className="postField"/>
+          <button type="submit">SEND</button>
+        </form>
+      </div>
 
         <main>
           {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
@@ -322,7 +324,7 @@ function SignIn() {
         </main>
 
         
-              </>
+      </>
     )
   }
 
@@ -410,30 +412,31 @@ function SignIn() {
     const [profile] = useCollectionData(query, { idField: 'id' });
     return(
         <>
-            <Topbar className="topbar"/>
-            <div className="profile">
-                {/*<Sidebar className="sidebar"/>*/}
-                <div className="profileRight">
-                    <div className="profileRightTop">
-                        <img className="profileCoverImg" src = {background} alt=""/>
-                        <img className="profileUserImg" src = {photoURL} alt=""/>
-                        <div className="profileInfo">
-                            {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
-                        </div>
-                    </div>
-<div className="profileBottom">
-                    <div className="profileRightBottom">
-<h4>Your Posts</h4>
-                        <FilteredPostsPage/>
-                    </div>
-<div className="profileLeftBottom">
-                        <h4>Feed</h4>
-                        <PostsPage/>
-                      </div>
-                    </div>
-                </div>   
-            </div>
-        </>
+          <Topbar className="topbar"/>
+          <div className="profile">
+          {/*<Sidebar className="sidebar"/>*/}
+            <div className="profileRight">
+              <div className="profileRightTop">
+                <img className="profileCoverImg" src = {background} alt=""/>
+                <img className="profileUserImg" src = {photoURL} alt=""/>
+                <div className="profileInfo">
+                  {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
+                </div>
+              </div>
+              <div className="profileBottom">
+                <div className="profileRightBottom">
+                  <h4>Your Posts</h4>
+                  <FilteredPostsPage/>
+                </div>
+                <div className="profileLeftBottom">
+                  <h4>Feed</h4>
+                  <PostsPage/>
+                </div>
+              </div>
+            </div>   
+          </div>
+        <Footer/>
+      </>
     )
   }
 
@@ -459,10 +462,7 @@ function Topbar() {
             </span>
         </div>
         <div className="topbarCenter">
-            <div className="searchbar">
-                <Search className="searchIcon"/>
-                <input placeholder="Search" className="searchInput"/>
-            </div>
+            <Searchbar/>
         </div>
         <div className="topbarRight">
             <div className="topbarLinks">
@@ -475,14 +475,29 @@ function Topbar() {
                 <span className="topbarLink">
                   Home
                 </span>
-
-
                 <SignOut className="signOutButton"/>
             </div>
         </div>
     </div>
   )
 }
+
+/* In progress */
+function Searchbar(props) {
+  const [value, setValue] = useState('');
+  return (
+    <div className="searchbar">
+      <Search className="searchIcon"/>
+      <input type = "text" 
+      placeholder="Search" 
+      className="searchInput"
+      onChange={(event) => setValue(event.target.value)}
+      value={value}
+      />
+    </div>
+  )
+}
+
 /*
 import React from 'react';
 import { Link } from 'react-router-dom';
