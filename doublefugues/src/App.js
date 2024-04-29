@@ -304,14 +304,12 @@ function PostsPage() {
       photoURL
     })
 
-    setFormValue('Make a post!');
-
     dummy.current.scrollIntoView({behavior: 'smooth'});
   }
 
-  function toggleTag(x) {
-    tagArr = tagArr.includes(x) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr.push(x);
-    alert("test");
+  function toggleTag(x){
+    //tagArr = (tagArr & tagArr.length) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr.push(x);
+    //alert(x);
   }
 
     return (
@@ -329,10 +327,16 @@ function PostsPage() {
           </form>
           </div>
           <hr className="shareHr"/>
-          <button onclick="toggleTag('tag2')">#tag2</button>
+          <h5>Toggle Tags:</h5>
+          <span>
+            <button onclick={toggleTag('sports')}>#sports</button>
+            <button onclick={toggleTag('music')}>#music</button>
+            <button onclick={toggleTag('food')}>#food</button>
+            <button onclick={toggleTag('movies')}>#movies</button>
+          </span>
         </div>
       </div>
-      
+
         <main>
           {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
           <div ref={dummy}></div>
