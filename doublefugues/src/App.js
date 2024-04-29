@@ -297,7 +297,7 @@ function PostsPage() {
 
     await postsRef.add({
       text: formValue,
-      tags: [tagValue],
+      tags: [tagValue, "tag2"],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
@@ -429,10 +429,10 @@ function Profile() {
                           <h4>Your Posts</h4>
                           <FilteredPostsPage/>
                       </div>
-                      {/*<div className="profileLeftBottom">
+                      <div className="profileLeftBottom">
                           <h4>Feed</h4>
                           <PostsPage/>
-                      </div>*/}
+                      </div>
                   </div>
               </div>   
           </div>
