@@ -233,7 +233,6 @@ const Footer = () => {
 function App() {
   const [user] = useAuthState(auth);
   return (
-
     <div className="App">
         <section>
           {user ? <Profile /> : <LandingPage />}
@@ -282,8 +281,10 @@ function PostsPage() {
   const { uid } = auth.currentUser;
 
   const postsRef = firestore.collection('posts');
-  const query = postsRef.orderBy('createdAt');
-      /*const query = postsRef.where('uid','==',uid);*/
+  //const query = postsRef.orderBy('createdAt');
+  var tagArr = [];
+
+  const query = (tagArr && tagArr.length) ? postsRef.where("tags", "array-contains-any", tagArr) : postsRef.orderBy("createdAt");
 
   const [posts] = useCollectionData(query, {idField: 'id'});
 
@@ -297,7 +298,7 @@ function PostsPage() {
 
     await postsRef.add({
       text: formValue,
-      tags: [tagValue, "tag2"],
+      tags: [],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
@@ -305,8 +306,12 @@ function PostsPage() {
 
     setFormValue('Make a post!');
 
-      dummy.current.scrollIntoView({behavior: 'smooth'});
-      }
+    dummy.current.scrollIntoView({behavior: 'smooth'});
+  }
+
+  function toggleTag(x) {
+    tagArr = tagArr.includes(x) ? tagArr.splice(tagArr.indexOf(x), 1) : tagArr + x;
+  }
 
     return (
       <>
@@ -316,6 +321,7 @@ function PostsPage() {
           <input value={formValue} onChange={(e) => setFormValue(e.target.value)} className="postField"/>
           <button type="submit">SEND</button>
         </form>
+        <button onclick="toggleTag('x')">#tag2</button>
       </div>
 
         <main>
