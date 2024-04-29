@@ -287,9 +287,9 @@ function PostsPage() {
 
   const [posts] = useCollectionData(query, {idField: 'id'});
 
-  const [formValue, setFormValue] = useState('');
+  const [formValue, setFormValue, tagValue, setTagValue] = useState('');
 
-  const makePost = async(e) => {
+  const makePost = async(e, f) => {
 
     e.preventDefault();
 
@@ -297,12 +297,13 @@ function PostsPage() {
 
     await postsRef.add({
       text: formValue,
+      tags: [tagValue],
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
     })
 
-    setFormValue('');
+    setFormValue('Make a post!');
 
     dummy.current.scrollIntoView({behavior: 'smooth'});
     }
@@ -312,6 +313,7 @@ function PostsPage() {
   {/*<Topbar/>*/}
     <form onSubmit={makePost}>
       <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+      <input value={tagValue} onChange = {(f) => setTagValue(f.target.value)} />
       <button type="submit">SEND</button>
     </form>
 
@@ -355,7 +357,7 @@ function FilteredPostsPage() {
     setFormValue('');
 
     dummy.current.scrollIntoView({behavior: 'smooth'});
-    }
+  }
 
   return (
     <>
@@ -413,7 +415,7 @@ function Profile() {
           <Topbar className="topbar"/>
           <div className="profile">
               {/*<Sidebar className="sidebar"/>*/}
-              <button>Go To Feed</button>
+              {/*<button>Go To Feed</button>*/}
               <div className="profileRight">
                   <div className="profileRightTop">
                       <img className="profileCoverImg" src = {background} alt=""/>
