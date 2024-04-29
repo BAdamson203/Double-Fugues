@@ -270,172 +270,208 @@ function SignIn() {
   )
 }
 
-  function SignOut() {
-    return auth.currentUser && (
+function SignOut() {
+  return auth.currentUser && (
 
-      <button onClick={() => auth.signOut()}>Sign Out</button>
-    )
-  }
+    <button onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
 
-  function PostsPage() {
-    const dummy = useRef();
-    const { uid } = auth.currentUser;
+function PostsPage() {
+  const dummy = useRef();
+  const { uid } = auth.currentUser;
 
-    const postsRef = firestore.collection('posts');
-    const query = postsRef.orderBy('createdAt');
-        /*const query = postsRef.where('uid','==',uid);*/
+  const postsRef = firestore.collection('posts');
+  const query = postsRef.orderBy('createdAt');
+      /*const query = postsRef.where('uid','==',uid);*/
 
-    const [posts] = useCollectionData(query, {idField: 'id'});
+  const [posts] = useCollectionData(query, {idField: 'id'});
 
-    const [formValue, setFormValue] = useState('');
+  const [formValue, setFormValue] = useState('');
 
-    const makePost = async(e) => {
+  const makePost = async(e) => {
 
-      e.preventDefault();
+    e.preventDefault();
 
-      const { uid, photoURL } = auth.currentUser;
+    const { uid, photoURL } = auth.currentUser;
 
-      await postsRef.add({
-        text: formValue,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        uid,
-        photoURL
-      })
+    await postsRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL
+    })
 
-      setFormValue('');
+    setFormValue('');
 
-      dummy.current.scrollIntoView({behavior: 'smooth'});
-      }
-
-    return (
-      <>
-{/*<Topbar/>*/}
-      <form onSubmit={makePost}>
-        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit">SEND</button>
-      </form>
-
-        <main>
-          {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
-
-          <div ref={dummy}></div>
-        </main>
-
-        
-              </>
-    )
-  }
-
-  function FilteredPostsPage() {
-
-    const dummy = useRef();
-    const { uid } = auth.currentUser;
-
-    const postsRef = firestore.collection('posts');
-    const query = postsRef.where('uid','==',uid);
-        /*const query = postsRef.where('uid','==',uid);*/
-
-    const [posts] = useCollectionData(query, {idField: 'id'});
-
-    const [formValue, setFormValue] = useState('');
-
-    const makePost = async(e) => {
-
-      e.preventDefault();
-
-      const { uid, photoURL } = auth.currentUser;
-
-      await postsRef.add({
-        text: formValue,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        uid,
-        photoURL
-      })
-
-      setFormValue('');
-
-      dummy.current.scrollIntoView({behavior: 'smooth'});
-      }
-
-    return (
-      <>
-        <main>
-          {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
-
-          <div ref={dummy}></div>
-        </main>
-      </>
-    )
-  }
-
-  function SinglePost(props) {
-    const { text, uid, photoURL, createdAt, tags } = props.posts;
-    const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
-    var printTag = '';
-    for(const a in tags){
-      printTag += "#"+tags[a]+" ";
+    dummy.current.scrollIntoView({behavior: 'smooth'});
     }
 
-    return (
-      <div className="shareBox"> 
-                <div className="shareWrapper">
-                    <div className="shareTop">
-                        <img className="shareProfileImg" src={photoURL} alt="" />
-                        <p>
-                          {text}
-                        </p>
-                    </div>
-                    <hr className="shareHr"/>
-                    <div className="shareBottom">
-                        <div className="shareOptions">
-                            {/* shareOption is current placeholder for tag system */}
-                            <div className="shareOption">
-                                {printTag ? <b>{printTag}</b> : <i>This post has no tags</i>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            /*<div className={'post ${postClass}'}>
-        <img src={photoURL} />
-        <p>{text}</p>
-      </div>*/
-    )
+  return (
+    <>
+  {/*<Topbar/>*/}
+    <form onSubmit={makePost}>
+      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+      <button type="submit">SEND</button>
+    </form>
+
+      <main>
+        {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
+
+        <div ref={dummy}></div>
+      </main>
+
+      
+            </>
+  )
+}
+
+function FilteredPostsPage() {
+
+  const dummy = useRef();
+  const { uid } = auth.currentUser;
+
+  const postsRef = firestore.collection('posts');
+  const query = postsRef.where('uid','==',uid);
+      /*const query = postsRef.where('uid','==',uid);*/
+
+  const [posts] = useCollectionData(query, {idField: 'id'});
+
+  const [formValue, setFormValue] = useState('');
+
+  const makePost = async(e) => {
+
+    e.preventDefault();
+
+    const { uid, photoURL } = auth.currentUser;
+
+    await postsRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL
+    })
+
+    setFormValue('');
+
+    dummy.current.scrollIntoView({behavior: 'smooth'});
+    }
+
+  return (
+    <>
+      <main>
+        {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
+
+        <div ref={dummy}></div>
+      </main>
+    </>
+  )
+}
+
+function SinglePost(props) {
+  const { text, uid, photoURL, createdAt, tags } = props.posts;
+  const postClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+  var printTag = '';
+  for(const a in tags){
+    printTag += "#"+tags[a]+" ";
   }
 
-  function Profile() {
-    const { uid, photoURL } = auth.currentUser;
-    const profileRef = firestore.collection('account');
-    const query = profileRef.where('uid','==',uid);
-    const [profile] = useCollectionData(query, { idField: 'id' });
-    return(
-        <>
-            <Topbar className="topbar"/>
-            <div className="profile">
-                {/*<Sidebar className="sidebar"/>*/}
-                <div className="profileRight">
-                    <div className="profileRightTop">
-                        <img className="profileCoverImg" src = {background} alt=""/>
-                        <img className="profileUserImg" src = {photoURL} alt=""/>
-                        <div className="profileInfo">
-                            {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
-                        </div>
-                    </div>
-<div className="profileBottom">
-                    <div className="profileRightBottom">
-<h4>Your Posts</h4>
-                        <FilteredPostsPage/>
-                    </div>
-<div className="profileLeftBottom">
-                        <h4>Feed</h4>
-                        <PostsPage/>
+  return (
+    <div className="shareBox"> 
+              <div className="shareWrapper">
+                  <div className="shareTop">
+                      <img className="shareProfileImg" src={photoURL} alt="" />
+                      <p>
+                        {text}
+                      </p>
+                  </div>
+                  <hr className="shareHr"/>
+                  <div className="shareBottom">
+                      <div className="shareOptions">
+                          {/* shareOption is current placeholder for tag system */}
+                          <div className="shareOption">
+                              {printTag ? <b>{printTag}</b> : <i>This post has no tags</i>}
+                          </div>
                       </div>
-                    </div>
-                </div>   
-            </div>
-        </>
-    )
-  }
+                  </div>
+              </div>
+          </div>
+          /*<div className={'post ${postClass}'}>
+      <img src={photoURL} />
+      <p>{text}</p>
+    </div>*/
+  )
+}
+
+function Profile() {
+  const { uid, photoURL } = auth.currentUser;
+  const profileRef = firestore.collection('account');
+  const query = profileRef.where('uid','==',uid);
+  const [profile] = useCollectionData(query, { idField: 'id' });
+  return(
+      <>
+          <Topbar className="topbar"/>
+          <div className="profile">
+              {/*<Sidebar className="sidebar"/>*/}
+              <button>Go To Feed</button>
+              <div className="profileRight">
+                  <div className="profileRightTop">
+                      <img className="profileCoverImg" src = {background} alt=""/>
+                      <img className="profileUserImg" src = {photoURL} alt=""/>
+                      <div className="profileInfo">
+                          {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
+                      </div>
+                  </div>
+                  <div className="profileBottom">
+                      <div className="profileRightBottom">
+                          <h4>Your Posts</h4>
+                          <FilteredPostsPage/>
+                      </div>
+                      {/*<div className="profileLeftBottom">
+                          <h4>Feed</h4>
+                          <PostsPage/>
+                      </div>*/}
+                  </div>
+              </div>   
+          </div>
+      </>
+  )
+}
+
+function Feed() {
+  const { uid, photoURL } = auth.currentUser;
+  const profileRef = firestore.collection('account');
+  const query = profileRef.where('uid','==',uid);
+  const [profile] = useCollectionData(query, { idField: 'id' });
+  return(
+      <>
+          <Topbar className="topbar"/>
+          <div className="profile">
+              {/*<Sidebar className="sidebar"/>*/}
+              <div className="profileRight">
+                  <div className="profileRightTop">
+                      <img className="profileCoverImg" src = {background} alt=""/>
+                      <img className="profileUserImg" src = {photoURL} alt=""/>
+                      <div className="profileInfo">
+                          {profile && profile.map(prof => <ProfileInfo key ={prof.id} profiles={prof} />)}
+                      </div>
+                  </div>
+                  <div className="profileBottom">
+                      {/*<div className="profileRightBottom">
+                          <h4>Your Posts</h4>
+                          <FilteredPostsPage/>
+                      </div>*/}
+                      <div className="profileLeftBottom">
+                          <h4>Feed</h4>
+                          <PostsPage/>
+                      </div>
+                  </div>
+              </div>   
+          </div>
+      </>
+  )
+}
+
 
 function ProfileInfo(props){
   const { fname, id, lname, uid } = props.profiles;
