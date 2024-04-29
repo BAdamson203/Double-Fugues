@@ -278,7 +278,7 @@ function SignOut() {
 
 function PostsPage() {
   const dummy = useRef();
-  const { uid } = auth.currentUser;
+  const { uid,photoURL } = auth.currentUser;
 
   const postsRef = firestore.collection('posts');
   //const query = postsRef.orderBy('createdAt');
@@ -316,12 +316,20 @@ function PostsPage() {
     return (
       <>
 {/*<Topbar/>*/}
-      <div className="postForm">
-        <form onSubmit={makePost}>
-          <input value={formValue} onChange={(e) => setFormValue(e.target.value)} className="postField"/>
-          <button type="submit">SEND</button>
-        </form>
-        <button onclick="toggleTag('x')">#tag2</button>
+      <div className="shareBox"> 
+        <div className="shareWrapper">
+          <div className="shareTop">
+          <img className="shareProfileImg" src={photoURL} alt="" />
+          <form onSubmit={makePost}>
+            <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="what's your post?" className="postField"/>
+          </form>
+          </div>
+          <hr className="shareHr"/>
+          <button onclick="toggleTag('x')">#tag2</button>
+          <div className="shareBottom">
+            <button type="submit" className="submit">SEND</button>
+          </div>
+        </div>
       </div>
 
         <main>
