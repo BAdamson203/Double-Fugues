@@ -305,70 +305,71 @@ function PostsPage() {
 
     setFormValue('Make a post!');
 
-    dummy.current.scrollIntoView({behavior: 'smooth'});
-    }
+      dummy.current.scrollIntoView({behavior: 'smooth'});
+      }
 
-  return (
-    <>
-  {/*<Topbar/>*/}
-    <form onSubmit={makePost}>
-      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-      <input value={tagValue} onChange = {(f) => setTagValue(f.target.value)} />
-      <button type="submit">SEND</button>
-    </form>
+    return (
+      <>
+{/*<Topbar/>*/}
+      <div className="postForm">
+        <form onSubmit={makePost}>
+          <input value={formValue} onChange={(e) => setFormValue(e.target.value)} className="postField"/>
+          <button type="submit">SEND</button>
+        </form>
+      </div>
 
-      <main>
-        {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
+        <main>
+          {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
 
-        <div ref={dummy}></div>
-      </main>
+          <div ref={dummy}></div>
+        </main>
 
-      
-            </>
-  )
-}
+        
+      </>
+    )
+  }
 
-function FilteredPostsPage() {
+  function FilteredPostsPage() {
 
-  const dummy = useRef();
-  const { uid } = auth.currentUser;
+    const dummy = useRef();
+    const { uid } = auth.currentUser;
 
-  const postsRef = firestore.collection('posts');
-  const query = postsRef.where('uid','==',uid);
-      /*const query = postsRef.where('uid','==',uid);*/
+    const postsRef = firestore.collection('posts');
+    const query = postsRef.where('uid','==',uid);
+        /*const query = postsRef.where('uid','==',uid);*/
 
-  const [posts] = useCollectionData(query, {idField: 'id'});
+    const [posts] = useCollectionData(query, {idField: 'id'});
 
-  const [formValue, setFormValue] = useState('');
+    const [formValue, setFormValue] = useState('');
 
-  const makePost = async(e) => {
+    const makePost = async(e) => {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    const { uid, photoURL } = auth.currentUser;
+      const { uid, photoURL } = auth.currentUser;
 
-    await postsRef.add({
-      text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      uid,
-      photoURL
-    })
+      await postsRef.add({
+        text: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        photoURL
+      })
 
-    setFormValue('');
+      setFormValue('');
 
     dummy.current.scrollIntoView({behavior: 'smooth'});
   }
 
-  return (
-    <>
-      <main>
-        {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
+    return (
+      <>
+        <main>
+          {posts && posts.map(pst => <SinglePost key ={pst.id} posts={pst} />)}
 
-        <div ref={dummy}></div>
-      </main>
-    </>
-  )
-}
+          <div ref={dummy}></div>
+        </main>
+      </>
+    )
+  }
 
 function SinglePost(props) {
   const { text, uid, photoURL, createdAt, tags } = props.posts;
@@ -377,7 +378,6 @@ function SinglePost(props) {
   for(const a in tags){
     printTag += "#"+tags[a]+" ";
   }
-
   return (
     <div className="shareBox"> 
               <div className="shareWrapper">
@@ -436,6 +436,7 @@ function Profile() {
                   </div>
               </div>   
           </div>
+          <Footer/>
       </>
   )
 }
@@ -497,10 +498,7 @@ function Topbar() {
             </span>
         </div>
         <div className="topbarCenter">
-            <div className="searchbar">
-                <Search className="searchIcon"/>
-                <input placeholder="Search" className="searchInput"/>
-            </div>
+            <Searchbar/>
         </div>
         <div className="topbarRight">
             <div className="topbarLinks">
@@ -513,14 +511,29 @@ function Topbar() {
                 <span className="topbarLink">
                   Home
                 </span>
-
-
                 <SignOut className="signOutButton"/>
             </div>
         </div>
     </div>
   )
 }
+
+/* In progress */
+function Searchbar(props) {
+  const [value, setValue] = useState('');
+  return (
+    <div className="searchbar">
+      <Search className="searchIcon"/>
+      <input type = "text" 
+      placeholder="Search" 
+      className="searchInput"
+      onChange={(event) => setValue(event.target.value)}
+      value={value}
+      />
+    </div>
+  )
+}
+
 /*
 import React from 'react';
 import { Link } from 'react-router-dom';
